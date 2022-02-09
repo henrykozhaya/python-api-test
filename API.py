@@ -1,12 +1,20 @@
-from flask import Flask
+import datetime
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+def log_to_file(obj):
+    open('logs.txt', 'a').write(
+        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " | " + json.dumps(obj) + '\n'
+    )
 
-@app.route('/')
+
+@app.route('/showAll')
 def show_all():
-    print("Hello")
-    return "1"
+    obj = {"message":"OK"}
+    print(str(obj))
+    log_to_file(obj)
+    return jsonify(obj)
 
 
 if __name__ == '__main__':
